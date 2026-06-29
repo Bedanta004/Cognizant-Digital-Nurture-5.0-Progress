@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Community Event Portal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* Internal stylesheet applied directly in the head */
+        body {
+            background-color: #f4f4f4;
+        }
+    </style>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1 style="color: red;">Local Community Event Portal</h1>
+
+    <header id="mainHeader">
+        <h2>Upcoming Events</h2>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section-header">
+            <h3>Community Bulletin</h3>
+        </section>
+
+        <article class="news-article">
+            <p>Welcome to our new portal. Here you can find all the latest updates regarding our community center, upcoming town hall meetings, and local charity drives. We encourage everyone to participate and make our neighborhood a better place to live.</p>
+            <p>Volunteers are always needed for the weekend park cleanup. If you have a few hours to spare this Saturday, please sign up using the form below. Refreshments will be provided for all participants.</p>
+        </article>
+
+        <div class="eventCard">
+            <h3>Summer Festival</h3>
+            <p>Join us for food, music, and games.</p>
+            <button class="cta-button">Register Now</button>
+            
+            <ul class="event-details-list">
+                <li>Date: August 15th</li>
+                <li>Location: Main Park</li>
+            </ul>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Event ID</th>
+                        <th>Event Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>101</td>
+                        <td>Bake Sale</td>
+                        <td>Confirmed</td>
+                    </tr>
+                    <tr>
+                        <td>102</td>
+                        <td>Town Hall</td>
+                        <td>Pending</td>
+                    </tr>
+                    <tr>
+                        <td>103</td>
+                        <td>Charity Run</td>
+                        <td>Confirmed</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <form>
+            <input type="text" placeholder="Search events..." aria-label="Search">
+        </form>
+    </main>
+
+</body>
+</html>
