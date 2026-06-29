@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Local Community Event Portal</title>
+    
+    <style>
+        /* --- Exercise 3: Welcome Message Styling --- */
+        #welcomeBanner {
+            background-color: #e0f7fa;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .highlight {
+            background-color: #fff59d;
+            padding: 2px 5px;
+        }
+
+        /* --- Exercise 4: Image Gallery Styling --- */
+        table {
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+        .gallery-border {
+            border: 3px solid #333;
+            width: 150px;
+            cursor: pointer;
+            transition: width 0.3s ease;
+        }
+
+        /* --- Exercise 5: Form Styling --- */
+        form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ccc;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+        }
+        .error-msg {
+            color: red;
+            display: none;
+            font-size: 0.9em;
+            margin-left: 125px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#home">Home</a> | 
+        <a href="#events">Events</a> | 
+        <a href="#contact">Contact</a> | 
+        <a href="help.html" target="_blank">Help</a> 
+    </nav>
+
+    <hr>
+
+    <main>
+        
+        <section id="home">
+            <div id="welcomeBanner">
+                <h2>Welcome to the Event Portal</h2>
+                <p>Register for events and connect with neighbors! <span style="color: red; font-weight: bold;">Sign up early for discounts!</span></p>
+                <p class="highlight">Don't miss our upcoming summer festival.</p>
+            </div>
+
+            <h3>Event Promo Video</h3>
+            <video id="promoVideo" width="400" controls oncanplay="showVideoReadyMessage()">
+                <source src="dummy-video.mp4" type="video/mp4">
+                Your browser does not support HTML video.
+            </video>
+            <p id="videoStatus" style="color: green;"></p>
+        </section>
+
+        <section id="events">
+            <h3>Past Community Events</h3>
+            <table>
+                <tr>
+                    <td>
+                        <img src="event1.jpg" alt="People running in park" title="Charity Run 2023" class="gallery-border" ondblclick="toggleImageSize(this)">
+                        <br><caption>Charity 5K Run</caption>
+                    </td>
+                    <td>
+                        <img src="event2.jpg" alt="Food stalls" title="Summer Food Festival" class="gallery-border" ondblclick="toggleImageSize(this)">
+                        <br><caption>Summer Food Festival</caption>
+                    </td>
+                    <td>
+                        <img src="event3.jpg" alt="Local band playing" title="Concert in the Park" class="gallery-border" ondblclick="toggleImageSize(this)">
+                        <br><caption>Concert in the Park</caption>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="event4.jpg" alt="Kids painting" title="Art Fair" class="gallery-border" ondblclick="toggleImageSize(this)">
+                        <br><caption>Community Art Fair</caption>
+                    </td>
+                    <td>
+                        <img src="event5.jpg" alt="Tech setup" title="Tech Meetup" class="gallery-border" ondblclick="toggleImageSize(this)">
+                        <br><caption>Tech Meetup</caption>
+                    </td>
+                    <td>
+                        <img src="event6.jpg" alt="People cleaning park" title="Park Cleanup" class="gallery-border" ondblclick="toggleImageSize(this)">
+                        <br><caption>Annual Park Cleanup</caption>
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="contact">
+            <h3>Event Registration Form</h3>
+            <form id="eventForm" onsubmit="event.preventDefault(); submitRegistration();">
+                
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe" required autofocus>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" placeholder="1234567890" onblur="validatePhone(this)">
+                    <div id="phoneError" class="error-msg">Please enter a valid phone number.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Event Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventType">Event Type:</label>
+                    <select id="eventType" name="eventType" onchange="updateFee(); saveUserPreference();">
+                        <option value="free">Free Meetup</option>
+                        <option value="workshop">Paid Workshop</option>
+                        <option value="gala">Charity Gala</option>
+                    </select>
+                    <span id="feeDisplay" style="font-weight: bold; margin-left: 10px;"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" style="vertical-align: top;">Message:</label>
+                    <textarea id="message" name="message" rows="4" cols="30" onkeyup="updateCharCount()"></textarea>
+                    <br><small style="margin-left: 125px;">Characters: <span id="charCount">0</span></small>
+                </div>
+
+                <button type="submit" onclick="showSubmitPrompt()">Register</button>
+                
+                <button type="button" onclick="clearPreferences()">Clear Preferences</button>
+                
+                <br><br>
+                <output id="formConfirmation" style="color: green; font-weight: bold;"></output>
+            </form>
+        </section>
+
+        <section id="location">
+            <h3>Find Events Near You</h3>
+            <button onclick="getUserLocation()">Find Nearby Events</button>
+            <p id="geoResults"></p>
+        </section>
+
+    </main>
+
+    <hr>
+    <footer>
+        <p>&copy; 2026 Local Community Event Portal</p>
+    </footer>
+
+    <script>
+        // --- Exercise 6: Event Handling Functions ---
+
+        function validatePhone(inputField) {
+            const errorMsg = document.getElementById('phoneError');
+            // Simple validation: Ensure some text is entered if they leave the field
+            if (inputField.value.trim() === "") {
+                errorMsg.style.display = "block";
+            } else {
+                errorMsg.style.display = "none";
+            }
+        }
+
+        function updateFee() {
+            const eventType = document.getElementById('eventType').value;
+            const feeDisplay = document.getElementById('feeDisplay');
+            
+            if (eventType === 'free') {
+                feeDisplay.innerText = "Fee: $0";
+            } else if (eventType === 'workshop') {
+                feeDisplay.innerText = "Fee: $25";
+            } else if (eventType === 'gala') {
+                feeDisplay.innerText = "Fee: $100";
+            }
+        }
+
+        function toggleImageSize(imgElement) {
+            if (imgElement.style.width === "300px") {
+                imgElement.style.width = "150px";
+            } else {
+                imgElement.style.width = "300px";
+            }
+        }
+
+        function updateCharCount() {
+            const message = document.getElementById('message').value;
+            document.getElementById('charCount').innerText = message.length;
+        }
+
+        function showSubmitPrompt() {
+            console.log("Submit button clicked."); // Exercise 10: Debugging log
+        }
+
+        function submitRegistration() {
+            const outputElement = document.getElementById('formConfirmation');
+            outputElement.innerText = "Thank you! Your registration has been received.";
+        }
+
+        // --- Exercise 7: Video Events ---
+        
+        function showVideoReadyMessage() {
+            document.getElementById('videoStatus').innerText = "Video ready to play!";
+        }
+
+        // Warn user if they try to leave with unsaved form data
+        window.onbeforeunload = function(e) {
+            const nameInput = document.getElementById('name').value;
+            if (nameInput.length > 0) {
+                return "You have unsaved changes in your form. Are you sure you want to leave?";
+            }
+        };
+
+        // --- Exercise 8: Saving User Preferences ---
+        
+        function saveUserPreference() {
+            const selectedEvent = document.getElementById('eventType').value;
+            localStorage.setItem('preferredEvent', selectedEvent);
+            sessionStorage.setItem('lastInteraction', new Date().toISOString());
+        }
+
+        function loadUserPreference() {
+            const savedEvent = localStorage.getItem('preferredEvent');
+            if (savedEvent) {
+                document.getElementById('eventType').value = savedEvent;
+            }
+            updateFee(); // Ensure the fee display matches the loaded preference
+        }
+
+        function clearPreferences() {
+            localStorage.clear();
+            sessionStorage.clear();
+            alert("All saved preferences have been cleared.");
+            document.getElementById('eventType').value = "free"; // reset to default
+            updateFee();
+        }
+
+        // --- Exercise 9: Geolocation ---
+        
+        function getUserLocation() {
+            const display = document.getElementById('geoResults');
+            display.innerText = "Locating...";
+
+            if (navigator.geolocation) {
+                // Using high accuracy options as requested
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                };
+
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        display.innerHTML = `<strong>Latitude:</strong> ${position.coords.latitude} <br> <strong>Longitude:</strong> ${position.coords.longitude}`;
+                    },
+                    function(error) {
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                display.innerText = "Location request denied by user.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                display.innerText = "Location information is currently unavailable.";
+                                break;
+                            case error.TIMEOUT:
+                                display.innerText = "The request to get user location timed out.";
+                                break;
+                            default:
+                                display.innerText = "An unknown error occurred.";
+                                break;
+                        }
+                    }, 
+                    options
+                );
+            } else {
+                display.innerText = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        // Initialize scripts on page load
+        window.onload = function() {
+            loadUserPreference();
+        };
+
+    </script>
+</body>
+</html>
