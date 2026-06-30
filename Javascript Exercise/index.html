@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Community Event Portal</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { font-family: sans-serif; margin: 20px; max-width: 800px; }
+        .event-card { border: 1px solid #ccc; padding: 15px; margin-bottom: 10px; border-radius: 5px; display: none; /* Hidden initially for jQuery fadeIn */ }
+        .error { color: red; font-size: 0.9em; display: none; }
+        #loading-spinner { display: none; font-weight: bold; color: blue; }
+        .filters { margin-bottom: 20px; padding: 10px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>Local Community Event Portal</h1>
+
+    <div class="filters">
+        <input type="text" id="searchInput" placeholder="Search by name (Press Enter)..." />
+        <select id="categoryFilter">
+            <option value="All">All Categories</option>
+            <option value="Music">Music</option>
+            <option value="Workshop">Workshop</option>
+        </select>
+    </div>
+
+    <div id="loading-spinner">Loading events...</div>
+    <div id="event-container"></div>
+
+    <hr>
+
+    <h2>Register for an Event</h2>
+    <form id="registrationForm">
+        <div>
+            <label>Name:</label>
+            <input type="text" name="userName" required>
+            <span class="error" id="nameError">Name is required.</span>
+        </div>
+        <div>
+            <label>Email:</label>
+            <input type="email" name="userEmail" required>
+            <span class="error" id="emailError">Valid email required.</span>
+        </div>
+        <div>
+            <label>Event ID:</label>
+            <input type="number" name="eventId" required>
+        </div>
+        <button type="button" id="registerBtn">Register</button>
+    </form>
+    <div id="formMessage"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>
